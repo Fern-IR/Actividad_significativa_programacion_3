@@ -1,0 +1,240 @@
+<Window x:Class="Actividad_Significativa.Arboles"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Arboles Binarios - BST &amp; Red-Black"
+        WindowState="Maximized"
+        WindowStartupLocation="CenterScreen"
+        Background="{StaticResource ColorFondoOscuro}">
+
+    <Window.Resources>
+        <ResourceDictionary Source="pack://application:,,,/Estilos.xaml"/>
+    </Window.Resources>
+
+    <Grid>
+        <!-- Izquierda: operaciones BST y balanceo; derecha: metricas y lienzo con zoom -->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1.0*"/>
+            <ColumnDefinition Width="3.0*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Formulario: tipo dato, insercion, borrado del ultimo nodo, recorridos, balanceo rojonegro -->
+        <Border Grid.Column="0" Background="{StaticResource GradienteSidebar}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Border Grid.Row="0" Padding="24,32,24,20"
+                        BorderBrush="{StaticResource ColorBordeOscuro}" BorderThickness="0,0,0,1">
+                    <StackPanel>
+                        <TextBlock Text="Arbol" FontSize="36" HorizontalAlignment="Center" Margin="0,0,0,10" Foreground="{StaticResource ColorTextoClaro}"/>
+                        <TextBlock Text="Arboles Binarios"
+                                   FontFamily="Segoe UI" FontSize="19" FontWeight="Bold"
+                                   Foreground="{StaticResource ColorTextoClaro}" HorizontalAlignment="Center"/>
+
+                    </StackPanel>
+                </Border>
+
+                <!-- Scroll: en pantallas chicas se accede a todo el panel sin perder botones -->
+                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="0,16,0,0">
+
+                        <TextBlock Text="  TIPO DE NODO"
+                                   FontFamily="Segoe UI" FontSize="10" FontWeight="Bold"
+                                   Foreground="{StaticResource ColorTextoAtenuado}" Margin="24,0,0,8"/>
+                        <StackPanel Margin="16,0,16,12" Orientation="Horizontal">
+                            <RadioButton x:Name="RbEnteros" Content="Enteros"
+                                         IsChecked="True" GroupName="TipoNodo"
+                                         Foreground="{StaticResource ColorTextoClaro}" FontFamily="Segoe UI" FontSize="13"
+                                         Margin="0,0,20,0"/>
+                            <RadioButton x:Name="RbCaracteres" Content="Caracteres"
+                                         GroupName="TipoNodo"
+                                         Foreground="{StaticResource ColorTextoClaro}" FontFamily="Segoe UI" FontSize="13"/>
+                        </StackPanel>
+
+                        <TextBlock Text="  INSERCIÓN BST"
+                                   FontFamily="Segoe UI" FontSize="10" FontWeight="Bold"
+                                   Foreground="{StaticResource ColorTextoAtenuado}" Margin="24,0,0,8"/>
+
+                        <StackPanel Margin="16,0,16,8">
+                            <TextBlock Text="Valor del nodo" Style="{StaticResource EstiloTextoSidebar}"
+                                       FontSize="11" Margin="4,0,0,5"/>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBox x:Name="TxtInputArbol" Grid.Column="0"
+                                         Style="{StaticResource EstiloCajaTexto}"
+                                         Background="{StaticResource ColorFondoOscuroSuave}" Foreground="{StaticResource ColorTextoClaro}"
+                                         BorderBrush="{StaticResource ColorBordeOscuro}" Height="48" Margin="0,0,6,0"
+                                         ToolTip="Entero o caracter segun el tipo seleccionado"/>
+                                <Button x:Name="BtnRandomNodo" Grid.Column="1"
+                                        Click="BtnRandomNodo_Click"
+                                        Content="Aleatorio" MinWidth="90" Height="40"
+                                        Style="{StaticResource EstiloBotonRandom}"
+                                        Padding="10,0" ToolTip="Inserta entero aleatorio [1-99]"/>
+                            </Grid>
+                        </StackPanel>
+
+                        <Grid Margin="16,0,16,14">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Button Grid.Column="0" x:Name="BtnInsertarNodo"
+                                    Click="BtnInsertarNodo_Click"
+                                    Content="Insertar" Style="{StaticResource EstiloBotonAzul}"
+                                    Margin="0,0,4,0" Height="34" FontSize="12"
+                                    ToolTip="Insertar nodo en BST"/>
+                            <Button Grid.Column="1" x:Name="BtnEliminarNodo"
+                                    Click="BtnEliminarNodo_Click"
+                                    Content="Borrar" Style="{StaticResource EstiloBotonPeligro}"
+                                    Margin="4,0,0,0" Height="34" FontSize="12"
+                                    ToolTip="Eliminar nodo"/>
+                        </Grid>
+
+                        <TextBlock Text="  BUSQUEDA Y ANALISIS"
+                                   FontFamily="Segoe UI" FontSize="10" FontWeight="Bold"
+                                   Foreground="{StaticResource ColorTextoAtenuado}" Margin="24,0,0,8"/>
+
+                        <Button x:Name="BtnBuscarNodo" Click="BtnBuscarNodo_Click"
+                                Content="Buscar nodo" Style="{StaticResource EstiloBotonAlgoritmo}"
+                                Margin="16,0,16,8" Height="34" FontSize="12"
+                                ToolTip="Busca el valor del campo de arriba"/>
+                        <Button x:Name="BtnLimpiarArbol" Click="BtnLimpiarArbol_Click"
+                                Content="Limpiar arbol" Style="{StaticResource EstiloBotonPeligro}"
+                                Margin="16,0,16,14" Height="34" FontSize="12"
+                                ToolTip="Reinicia el arbol BST"/>
+
+                        <Border BorderBrush="{StaticResource ColorBordeOscuro}" BorderThickness="0,1,0,0" Margin="16,0,16,16"/>
+
+                        <TextBlock Text="  RECORRIDOS"
+                                   FontFamily="Segoe UI" FontSize="10" FontWeight="Bold"
+                                   Foreground="{StaticResource ColorTextoAtenuado}" Margin="24,0,0,8"/>
+
+                        <UniformGrid Rows="1" Columns="3" Margin="16,0,16,14">
+                            <Button x:Name="BtnInOrden" Click="BtnInOrden_Click"
+                                    Content="Orden" Style="{StaticResource EstiloBotonAlgoritmo}"
+                                    Height="34" FontSize="11" ToolTip="Izquierda, raiz, derecha"/>
+                            <Button x:Name="BtnPreOrden" Click="BtnPreOrden_Click"
+                                    Content="PreOrden" Style="{StaticResource EstiloBotonAlgoritmo}"
+                                    Height="34" FontSize="11" ToolTip="Raiz, izquierda, derecha"/>
+                            <Button x:Name="BtnPostOrden" Click="BtnPostOrden_Click"
+                                    Content="PostOrden" Style="{StaticResource EstiloBotonAlgoritmo}"
+                                    Height="34" FontSize="11" ToolTip="Izquierda, derecha, raiz"/>
+                        </UniformGrid>
+
+                        <Border BorderBrush="{StaticResource ColorBordeOscuro}" BorderThickness="0,1,0,0" Margin="16,0,16,16"/>
+
+                        <TextBlock Text="  RED-BLACK TREE"
+                                   FontFamily="Segoe UI" FontSize="10" FontWeight="Bold"
+                                   Foreground="{StaticResource ColorTextoAtenuado}" Margin="24,0,0,8"/>
+
+                        <Button x:Name="BtnBalancear" Click="BtnBalancear_Click"
+                                Content="Balancear"
+                                Style="{StaticResource EstiloBotonTeal}"
+                                Margin="16,0,16,6" Height="36" FontSize="12"
+                                ToolTip="Balancea el arbol"/>
+
+                        <TextBlock Text="  RESULTADOS"
+                                   FontFamily="Segoe UI" FontSize="10" FontWeight="Bold"
+                                   Foreground="{StaticResource ColorTextoAtenuado}" Margin="24,0,0,8"/>
+
+                        <TextBox x:Name="TxtResultadoRecorrido"
+                                 Style="{StaticResource EstiloConsolaSalida}"
+                                 Margin="16,0,16,16" Height="100"
+                                 VerticalScrollBarVisibility="Auto"/>
+                    </StackPanel>
+                </ScrollViewer>
+
+                <Border Grid.Row="2" BorderBrush="{StaticResource ColorBordeOscuro}" BorderThickness="0,1,0,0" Padding="16,12">
+                    <Button x:Name="BtnVolver" Click="BtnVolver_Click"
+                            Content="Volver al menu principal"
+                            Style="{StaticResource EstiloBotonSidebar}"
+                            HorizontalAlignment="Stretch"/>
+                </Border>
+            </Grid>
+        </Border>
+
+        <!-- Derecha: badges informativos + lienzo ancho con ScaleTransform para zoom con Ctrl+rueda -->
+        <Grid Grid.Column="1" Background="{StaticResource ColorFondoOscuro}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Resumen visual (tipo BST, modo, balance) para contextualizar la demo -->
+            <Border Grid.Row="0" Background="{StaticResource GradienteEncabezado}">
+                <Grid Margin="28,18,28,18">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Text="Arbol Binario de Busqueda"
+                                   FontFamily="Segoe UI" FontSize="22" FontWeight="Bold" Foreground="{StaticResource ColorTextoClaro}"/>
+                    </StackPanel>
+                    <Border Grid.Column="1" Background="{StaticResource ColorSuperficieOscuraAlt}" CornerRadius="8" Padding="14,8" Margin="0,0,10,0">
+                        <StackPanel>
+                            <TextBlock Text="TIPO" FontSize="10" FontWeight="Bold" Foreground="{StaticResource ColorTextoAtenuado}" HorizontalAlignment="Center"/>
+                            <TextBlock Text="BST" FontFamily="Segoe UI" FontSize="14" FontWeight="Bold" Foreground="{StaticResource ColorTeal}" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+                    <Border Grid.Column="2" Background="{StaticResource ColorSuperficieOscuraAlt}" CornerRadius="8" Padding="14,8" Margin="0,0,10,0">
+                        <StackPanel>
+                            <TextBlock Text="MODO" FontSize="10" FontWeight="Bold" Foreground="{StaticResource ColorTextoAtenuado}" HorizontalAlignment="Center"/>
+                            <TextBlock Text="Busqueda" FontFamily="Segoe UI" FontSize="14" FontWeight="Bold" Foreground="{StaticResource ColorPeligro}" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+                    <Border Grid.Column="3" Background="{StaticResource ColorSuperficieOscuraAlt}" CornerRadius="8" Padding="14,8">
+                        <StackPanel>
+                            <TextBlock Text="BALANCE" FontSize="10" FontWeight="Bold" Foreground="{StaticResource ColorTextoAtenuado}" HorizontalAlignment="Center"/>
+                            <TextBlock Text="Disponible" FontFamily="Segoe UI" FontSize="14" FontWeight="Bold" Foreground="{StaticResource ColorAcento}" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </Border>
+
+            <!-- Canvas grande: el arbol puede crecer; el usuario hace zoom sin perder detalle -->
+            <Border Grid.Row="1" Background="{StaticResource ColorSuperficieOscura}" Margin="16" CornerRadius="14"
+                    BorderBrush="{StaticResource ColorBordeOscuro}" BorderThickness="1">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Border Grid.Row="0" Background="{StaticResource ColorSuperficieOscuraAlt}" CornerRadius="14,14,0,0"
+                            Padding="20,12" BorderBrush="{StaticResource ColorBordeOscuro}" BorderThickness="0,0,0,1">
+                        <Grid>
+                            <TextBlock Text="Visualizacion Grafica del Arbol"
+                                       FontFamily="Segoe UI" FontSize="14" FontWeight="Bold"
+                                       Foreground="{StaticResource ColorTextoClaro}" VerticalAlignment="Center"/>
+                        </Grid>
+                    </Border>
+
+                    <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto"
+                                  VerticalScrollBarVisibility="Auto"
+                                  PreviewMouseWheel="ScrollViewer_PreviewMouseWheel">
+                        <Canvas x:Name="CanvasArbol" Background="Transparent"
+                                Width="3000" Height="2000" HorizontalAlignment="Center" VerticalAlignment="Top"
+                                MinWidth="480" MinHeight="320" ClipToBounds="False">
+                            <Canvas.LayoutTransform>
+                                <ScaleTransform x:Name="ZoomArbol" ScaleX="1" ScaleY="1" />
+                            </Canvas.LayoutTransform>
+                        </Canvas>
+                    </ScrollViewer>
+
+                </Grid>
+            </Border>
+        </Grid>
+
+    </Grid>
+</Window>

@@ -1,0 +1,237 @@
+ <Window x:Class="Actividad_Significativa.Recursividad"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Recursividad - Estructuras de Datos"
+        WindowState="Maximized"
+        WindowStartupLocation="CenterScreen"
+        Background="{StaticResource ColorFondoOscuro}">
+
+    <Window.Resources>
+        <!-- Placeholder en TextBox y bordes de tarjetas de resultados -->
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/Estilos.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <Style x:Key="EstiloCajaPlaceholder" TargetType="TextBox">
+                <Setter Property="Height" Value="42"/>
+                <Setter Property="Padding" Value="12,0"/>
+                <Setter Property="Background" Value="{StaticResource ColorSuperficieOscuraAlt}"/>
+                <Setter Property="Foreground" Value="{StaticResource ColorTextoClaro}"/>
+                <Setter Property="BorderBrush" Value="{StaticResource ColorBordeOscuro}"/>
+                <Setter Property="BorderThickness" Value="1.3"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                <Setter Property="CaretBrush" Value="{StaticResource ColorTextoClaro}"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="TextBox">
+                            <Border x:Name="Bd"
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    CornerRadius="8">
+                                <Grid>
+                                    <ScrollViewer x:Name="PART_ContentHost" Margin="{TemplateBinding Padding}" VerticalAlignment="Center"/>
+                                    <TextBlock x:Name="Placeholder"
+                                               Text="{TemplateBinding Tag}"
+                                               Foreground="{StaticResource ColorTextoAtenuado}"
+                                               Margin="{TemplateBinding Padding}"
+                                               VerticalAlignment="Center"
+                                               Visibility="Collapsed"
+                                               IsHitTestVisible="False"/>
+                                </Grid>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="Text" Value="">
+                                    <Setter TargetName="Placeholder" Property="Visibility" Value="Visible"/>
+                                </Trigger>
+                                <Trigger Property="IsKeyboardFocused" Value="True">
+                                    <Setter TargetName="Bd" Property="BorderBrush" Value="{StaticResource ColorAcento}"/>
+                                </Trigger>
+                                <MultiTrigger>
+                                    <MultiTrigger.Conditions>
+                                        <Condition Property="Text" Value=""/>
+                                        <Condition Property="IsKeyboardFocused" Value="True"/>
+                                    </MultiTrigger.Conditions>
+                                    <Setter TargetName="Placeholder" Property="Visibility" Value="Collapsed"/>
+                                </MultiTrigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="EstiloTarjetaRecursividad" TargetType="Border">
+                <Setter Property="Background" Value="{StaticResource ColorSuperficieOscura}"/>
+                <Setter Property="BorderBrush" Value="{StaticResource ColorBordeOscuro}"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="CornerRadius" Value="12"/>
+                <Setter Property="Padding" Value="14"/>
+            </Style>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid Margin="18">
+        <!-- Fila 0: formulario; fila 1: trazas y numeros resultado -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Entradas para factorial, fibonacci, vector y inversion (cada una con boton aleatorio) -->
+        <Border Grid.Row="0"
+                Margin="0,0,0,12"
+                Padding="16"
+                Background="{StaticResource GradienteEncabezado}"
+                BorderBrush="{StaticResource ColorBordeOscuro}"
+                BorderThickness="1"
+                CornerRadius="12">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0">
+                    <TextBlock Text=" Recursividad"
+                               Style="{StaticResource EstiloTituloModulo}"
+                               FontSize="25"
+                               Margin="0,0,0,8"/>
+                    
+
+                    <WrapPanel>
+                        <StackPanel Margin="0,0,10,0">
+                            <TextBlock Text="Factorial (n)" Style="{StaticResource EstiloEtiqueta}" Margin="0,0,0,4"/>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBox x:Name="TxtFactorial" Width="180" Style="{StaticResource EstiloCajaPlaceholder}" Tag=""/>
+                                <Button x:Name="BtnRandomFactorial" Content="R" Width="49" Height="42" Margin="6,0,0,0" Style="{StaticResource EstiloBotonGris}" Click="BtnRandomFactorial_Click"/>
+                            </StackPanel>
+                        </StackPanel>
+                        <Button x:Name="BtnFactorial" Content="Calcular factorial" Style="{StaticResource EstiloBotonAzul}" Margin="0,20,8,0" Click="BtnFactorial_Click"/>
+
+                        <StackPanel Margin="0,0,10,0">
+                            <TextBlock Text="Fibonacci (n)" Style="{StaticResource EstiloEtiqueta}" Margin="0,0,0,4"/>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBox x:Name="TxtFibonacci" Width="180" Style="{StaticResource EstiloCajaPlaceholder}" Tag=""/>
+                                <Button x:Name="BtnRandomFibonacci" Content="R" Width="48" Height="42" Margin="6,0,0,0" Style="{StaticResource EstiloBotonGris}" Click="BtnRandomFibonacci_Click"/>
+                            </StackPanel>
+                        </StackPanel>
+                        <Button x:Name="BtnFibonacci" Content="Calcular fibonacci" Style="{StaticResource EstiloBotonTeal}" Margin="0,20,8,0" Click="BtnFibonacci_Click"/>
+
+                        <StackPanel Margin="0,0,10,0">
+                            <TextBlock Text="Vector (separado por comas)" Style="{StaticResource EstiloEtiqueta}" Margin="0,0,0,4"/>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBox x:Name="TxtVector" Width="240" Style="{StaticResource EstiloCajaPlaceholder}" Tag=""/>
+                                <Button x:Name="BtnRandomVector" Content="R" Width="48" Height="42" Margin="6,0,0,0" Style="{StaticResource EstiloBotonGris}" Click="BtnRandomVector_Click"/>
+                            </StackPanel>
+                        </StackPanel>
+                        <Button x:Name="BtnSumarVector" Content="Sumar vector" Style="{StaticResource EstiloBotonGris}" Margin="0,20,8,0" Click="BtnSumarVector_Click"/>
+
+                        <StackPanel Margin="0,0,10,0">
+                            <TextBlock Text="Invertir numero" Style="{StaticResource EstiloEtiqueta}" Margin="0,0,0,4"/>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBox x:Name="TxtInvertir" Width="180" Style="{StaticResource EstiloCajaPlaceholder}" Tag=""/>
+                                <Button x:Name="BtnRandomInvertir" Content="R" Width="48" Height="42" Margin="6,0,0,0" Style="{StaticResource EstiloBotonGris}" Click="BtnRandomInvertir_Click"/>
+                            </StackPanel>
+                        </StackPanel>
+                        <Button x:Name="BtnInvertirNumero" Content="Invertir numero" Style="{StaticResource EstiloBotonRandom}" Margin="0,20,8,0" Click="BtnInvertirNumero_Click"/>
+                    </WrapPanel>
+                </StackPanel>
+
+                <!-- Ayuda para la defensa: que condicion corta la recursion y orden de crecimiento aproximado -->
+                <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Top">
+                    <Border Background="{StaticResource ColorSuperficieOscura}" BorderBrush="{StaticResource ColorBordeOscuro}" BorderThickness="1" CornerRadius="10" Padding="14,10" Margin="0,0,8,0">
+                        <StackPanel>
+                            <TextBlock Text="Caso base" Style="{StaticResource EstiloEtiqueta}" HorizontalAlignment="Center" Margin="0"/>
+                            <TextBlock x:Name="TxtCasoBase" Text="-" Foreground="{StaticResource ColorAcento}" FontSize="18" FontWeight="SemiBold" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+                    <Border Background="{StaticResource ColorSuperficieOscura}" BorderBrush="{StaticResource ColorBordeOscuro}" BorderThickness="1" CornerRadius="10" Padding="14,10">
+                        <StackPanel>
+                            <TextBlock Text="Complejidad" Style="{StaticResource EstiloEtiqueta}" HorizontalAlignment="Center" Margin="0"/>
+                            <TextBlock x:Name="TxtComplejidad" Text="-" Foreground="{StaticResource ColorTeal}" FontSize="18" FontWeight="SemiBold" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Cuatro columnas: resultado numerico + traza textual por ejercicio -->
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="12"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="12"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.Column="0" Background="{StaticResource ColorSuperficieOscura}" BorderBrush="{StaticResource ColorBordeOscuro}" BorderThickness="1" CornerRadius="12" Padding="12">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Text="Factorial" Style="{StaticResource EstiloTituloPaso}" Margin="0,0,0,8"/>
+                        <TextBox Grid.Row="1" x:Name="TxtResFactorial" Style="{StaticResource EstiloCajaTexto}" IsReadOnly="True" Height="60" Background="{StaticResource ColorFondoOscuroSuave}" Foreground="{StaticResource ColorAcento}" FontSize="22" FontWeight="SemiBold" TextAlignment="Center"/>
+                        <TextBox Grid.Row="2" x:Name="TxtTraceFactorial" Style="{StaticResource EstiloConsolaSalida}" Margin="0,10,0,0" VerticalScrollBarVisibility="Auto" AcceptsReturn="True" TextWrapping="Wrap" Height="180"/>
+                    </Grid>
+                </Border>
+
+                <Border Grid.Column="2" Background="{StaticResource ColorSuperficieOscura}" BorderBrush="{StaticResource ColorBordeOscuro}" BorderThickness="1" CornerRadius="12" Padding="12">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Text="Fibonacci" Style="{StaticResource EstiloTituloPaso}" Margin="0,0,0,8"/>
+                        <TextBox Grid.Row="1" x:Name="TxtResFibonacci" Style="{StaticResource EstiloCajaTexto}" IsReadOnly="True" Height="52" Background="{StaticResource ColorFondoOscuroSuave}" Foreground="{StaticResource ColorTeal}" FontSize="22" FontWeight="SemiBold" TextAlignment="Center"/>
+                        <TextBox Grid.Row="2" x:Name="TxtTraceFibonacci" Style="{StaticResource EstiloConsolaSalida}" Margin="0,10,0,0" VerticalScrollBarVisibility="Auto" AcceptsReturn="True" TextWrapping="Wrap" Height="230"/>
+                    </Grid>
+                </Border>
+
+                <Border Grid.Column="4" Background="{StaticResource ColorSuperficieOscura}" BorderBrush="{StaticResource ColorBordeOscuro}" BorderThickness="1" CornerRadius="12" Padding="12">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Text="Suma de vector / Invertir numero" Style="{StaticResource EstiloTituloPaso}" Margin="0,0,0,8"/>
+
+                        <Border Grid.Row="1" Style="{StaticResource EstiloTarjetaRecursividad}" Margin="0,0,0,8">
+                            <StackPanel>
+                                <TextBlock Text="Resultado suma de vector" Style="{StaticResource EstiloEtiqueta}" Margin="0,0,0,6"/>
+                                <TextBox x:Name="TxtResVector" Style="{StaticResource EstiloCajaTexto}" IsReadOnly="True" Height="46" Background="{StaticResource ColorFondoOscuroSuave}" Foreground="{StaticResource ColorTeal}" FontSize="18" FontWeight="SemiBold" TextAlignment="Center"/>
+                                <TextBox x:Name="TxtTraceVector" Style="{StaticResource EstiloConsolaSalida}" Margin="0,8,0,0" Height="120" VerticalScrollBarVisibility="Auto" AcceptsReturn="True" TextWrapping="Wrap"/>
+                            </StackPanel>
+                        </Border>
+
+                        <Border Grid.Row="2" Style="{StaticResource EstiloTarjetaRecursividad}">
+                            <StackPanel>
+                                <TextBlock Text="Resultado invertir numero" Style="{StaticResource EstiloEtiqueta}" Margin="0,0,0,6"/>
+                                <TextBox x:Name="TxtResInvertir" Style="{StaticResource EstiloCajaTexto}" IsReadOnly="True" Height="46" Background="{StaticResource ColorFondoOscuroSuave}" Foreground="{StaticResource ColorAcento}" FontSize="18" FontWeight="SemiBold" TextAlignment="Center"/>
+                                <TextBox x:Name="TxtTraceInvertir" Style="{StaticResource EstiloConsolaSalida}" Margin="0,8,0,0" Height="120" VerticalScrollBarVisibility="Auto" AcceptsReturn="True" TextWrapping="Wrap"/>
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+                </Border>
+            </Grid>
+
+            <Border Grid.Row="1" Margin="0,10,0,0" Padding="12" Background="{StaticResource ColorFondoOscuroSuave}" BorderBrush="{StaticResource ColorBordeOscuro}" BorderThickness="1" CornerRadius="10">
+                <DockPanel>
+                    <TextBlock x:Name="TxtEstado" Text="Aca sale el resultado" Foreground="{StaticResource ColorExito}" FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                    <Button x:Name="BtnVolver" Content="Volver al menu principal" Style="{StaticResource EstiloBotonPeligro}" Width="210" HorizontalAlignment="Right" Click="BtnVolver_Click"/>
+                </DockPanel>
+            </Border>
+        </Grid>
+    </Grid>
+</Window>

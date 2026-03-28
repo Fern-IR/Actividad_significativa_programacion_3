@@ -1,0 +1,302 @@
+<Window x:Class="Actividad_Significativa.Ordenamiento"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Ordenamiento - Estructuras de Datos"
+        WindowState="Maximized"
+        WindowStartupLocation="CenterScreen"
+        Background="{StaticResource ColorFondoOscuro}">
+
+    <Window.Resources>
+        <ResourceDictionary Source="pack://application:,,,/Estilos.xaml"/>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1.0*"/>
+            <ColumnDefinition Width="3.0*"/>
+        </Grid.ColumnDefinitions>
+
+        <Border Grid.Column="0" Background="{StaticResource GradienteSidebar}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Border Grid.Row="0" Padding="24,32,24,20"
+                        BorderBrush="{StaticResource ColorBordeOscuro}" BorderThickness="0,0,0,1">
+                    <StackPanel>
+                        <TextBlock Text=" Tipos de Ordenamiento"
+                                   FontFamily="Segoe UI" FontSize="30" FontWeight="Bold"
+                                   Foreground="{StaticResource ColorTextoClaro}" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Border>
+
+                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="0,16,0,0">
+
+                        <TextBlock Text="  ENTRADA DE DATOS"
+                                   FontFamily="Segoe UI" FontSize="10" FontWeight="Bold"
+                                   Foreground="{StaticResource ColorTextoAtenuado}" Margin="24,0,0,8"/>
+
+                        <StackPanel Margin="16,0,16,8">
+                            <TextBlock Text="Agregar elemento al arreglo" Style="{StaticResource EstiloTextoSidebar}"
+                                       FontSize="11" Margin="4,0,0,5"/>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBox x:Name="TxtInputOrdenamiento" Grid.Column="0"
+                                         Style="{StaticResource EstiloCajaTexto}"
+                                         Background="{StaticResource ColorFondoOscuroSuave}" Foreground="{StaticResource ColorTextoClaro}"
+                                         BorderBrush="{StaticResource ColorBordeOscuro}" Height="48" Margin="0,0,6,0"
+                                         ToolTip="Numero entero para agregar al arreglo"/>
+                                <Button x:Name="BtnRandomOrdenamiento" Grid.Column="1"
+                                        Click="BtnRandomOrdenamiento_Click"
+                                        Content="Aleatorio" MinWidth="90" Height="40"
+                                        Style="{StaticResource EstiloBotonRandom}"
+                                        Padding="10,0" ToolTip="Agrega valor aleatorio [1-999]"/>
+                            </Grid>
+                        </StackPanel>
+
+                        <Grid Margin="16,0,16,16">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Button Grid.Column="0" x:Name="BtnAgregarOrdenamiento"
+                                    Click="BtnAgregarOrdenamiento_Click"
+                                    Content="Agregar" Style="{StaticResource EstiloBotonAzul}"
+                                    Margin="0,0,4,0" Height="34" FontSize="12"/>
+                            <Button Grid.Column="1" x:Name="BtnLimpiarOrdenamiento"
+                                    Click="BtnLimpiarOrdenamiento_Click"
+                                    Content="Limpiar" Style="{StaticResource EstiloBotonPeligro}"
+                                    Margin="4,0,0,0" Height="34" FontSize="12"/>
+                        </Grid>
+
+                        <Border BorderBrush="{StaticResource ColorBordeOscuro}" BorderThickness="0,1,0,0" Margin="16,0,16,16"/>
+
+                        <TextBlock Text="  ALGORITMOS BASICOS"
+                                   FontFamily="Segoe UI" FontSize="10" FontWeight="Bold"
+                                   Foreground="{StaticResource ColorTextoAtenuado}" Margin="24,0,0,10"/>
+
+                        <UniformGrid Rows="2" Columns="2" Margin="16,0,16,12">
+                            <Button x:Name="BtnOrdenarBurbuja" Click="BtnOrdenarBurbuja_Click"
+                                    Content="Burbuja" Style="{StaticResource EstiloBotonAlgoritmo}" Height="38"/>
+                            <Button x:Name="BtnOrdenarSeleccion" Click="BtnOrdenarSeleccion_Click"
+                                    Content="Seleccion" Style="{StaticResource EstiloBotonAlgoritmo}" Height="38"/>
+                            <Button x:Name="BtnOrdenarInsercion" Click="BtnOrdenarInsercion_Click"
+                                    Content="Insercion" Style="{StaticResource EstiloBotonAlgoritmo}" Height="38"/>
+                            <Button x:Name="BtnOrdenarShell" Click="BtnOrdenarShell_Click"
+                                    Content="Shell" Style="{StaticResource EstiloBotonAlgoritmo}" Height="38"/>
+                        </UniformGrid>
+
+                        <Border BorderBrush="{StaticResource ColorBordeOscuro}" BorderThickness="0,1,0,0" Margin="16,0,16,16"/>
+
+                        <TextBlock Text="  ALGORITMOS AVANZADOS"
+                                   FontFamily="Segoe UI" FontSize="10" FontWeight="Bold"
+                                   Foreground="{StaticResource ColorTextoAtenuado}" Margin="24,0,0,10"/>
+
+                        <UniformGrid Rows="1" Columns="2" Margin="16,0,16,12">
+                            <Button x:Name="BtnOrdenarMerge" Click="BtnOrdenarMerge_Click"
+                                    Content="Merge" Style="{StaticResource EstiloBotonAlgoritmo}" Height="38"/>
+                            <Button x:Name="BtnOrdenarQuick" Click="BtnOrdenarQuick_Click"
+                                    Content="* Quick" Style="{StaticResource EstiloBotonAlgoritmo}" Height="38"/>
+                        </UniformGrid>
+
+                        <Border BorderBrush="{StaticResource ColorBordeOscuro}" BorderThickness="0,1,0,0" Margin="16,0,16,16"/>
+
+                        <TextBlock Text="  ALGORITMOS LINEALES"
+                                   FontFamily="Segoe UI" FontSize="10" FontWeight="Bold"
+                                   Foreground="{StaticResource ColorTextoAtenuado}" Margin="24,0,0,10"/>
+
+                        <UniformGrid Rows="1" Columns="2" Margin="16,0,16,4">
+                            <Button x:Name="BtnOrdenarRadix" Click="BtnOrdenarRadix_Click"
+                                    Content="Radix" Style="{StaticResource EstiloBotonAlgoritmo}" Height="38"/>
+                            <Button x:Name="BtnOrdenarBucket" Click="BtnOrdenarBucket_Click"
+                                    Content="Bucket" Style="{StaticResource EstiloBotonAlgoritmo}" Height="38"/>
+                        </UniformGrid>
+
+                        <TextBlock Text="Radix trabaja con valores positivos"
+                                   FontFamily="Segoe UI" FontSize="11"
+                                   Foreground="{StaticResource ColorTextoAtenuado}" Margin="20,6,16,20"/>
+
+                        <Border BorderBrush="{StaticResource ColorBordeOscuro}" BorderThickness="0,1,0,0" Margin="16,0,16,16"/>
+
+                        <TextBlock Text="  ALGORITMOS DE BUSQUEDA"
+                                   FontFamily="Segoe UI" FontSize="10" FontWeight="Bold"
+                                   Foreground="{StaticResource ColorTextoAtenuado}" Margin="24,0,0,10"/>
+
+                        <StackPanel Margin="16,0,16,8">
+                            <TextBlock Text="Ingrese valor a buscar"
+                                       Style="{StaticResource EstiloTextoSidebar}"
+                                       FontSize="11" Margin="4,0,0,5"/>
+                            <TextBox x:Name="TxtBusquedaValor"
+                                     Style="{StaticResource EstiloCajaTexto}"
+                                     Background="{StaticResource ColorFondoOscuroSuave}" Foreground="{StaticResource ColorTextoClaro}"
+                                     BorderBrush="{StaticResource ColorBordeOscuro}" Height="40"
+                                     ToolTip="Numero entero a buscar"/>
+                        </StackPanel>
+
+                        <UniformGrid Rows="2" Columns="2" Margin="16,0,16,8">
+                            <Button x:Name="BtnBusquedaSecuencial" Click="BtnBusquedaSecuencial_Click"
+                                    Content="Secuencial" Style="{StaticResource EstiloBotonAlgoritmo}" Height="38"/>
+                            <Button x:Name="BtnBusquedaBinaria" Click="BtnBusquedaBinaria_Click"
+                                    Content="Binaria" Style="{StaticResource EstiloBotonAlgoritmo}" Height="38"/>
+                            <Button x:Name="BtnBusquedaHashIndexada" Click="BtnBusquedaHashIndexada_Click"
+                                    Content="Hash Indexada" Style="{StaticResource EstiloBotonAlgoritmo}" Height="38"/>
+                        </UniformGrid>
+
+                        <Border Margin="16,0,16,20" Padding="10,8"
+                                Background="{StaticResource ColorFondoOscuroSuave}"
+                                BorderBrush="{StaticResource ColorBordeOscuro}" BorderThickness="1" CornerRadius="8">
+                            <TextBlock x:Name="TxtResultadoBusqueda"
+                                       Text="Resultado de busqueda pendiente"
+                                       FontFamily="Segoe UI" FontSize="12"
+                                       Foreground="{StaticResource ColorTextoAtenuado}" TextWrapping="Wrap"/>
+                        </Border>
+
+                    </StackPanel>
+                </ScrollViewer>
+
+                <Border Grid.Row="2" BorderBrush="{StaticResource ColorBordeOscuro}" BorderThickness="0,1,0,0" Padding="16,12">
+                    <Button x:Name="BtnVolver" Click="BtnVolver_Click"
+                            Content="Volver al menu principal"
+                            Style="{StaticResource EstiloBotonSidebar}" HorizontalAlignment="Stretch"/>
+                </Border>
+            </Grid>
+        </Border>
+
+        <Grid Grid.Column="1" Background="{StaticResource ColorFondoOscuro}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Border Grid.Row="0" Background="{StaticResource GradienteEncabezado}">
+                <Grid Margin="28,18,28,18">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Text="Algoritmos de Ordenamiento"
+                                   FontFamily="Segoe UI" FontSize="22" FontWeight="Bold" Foreground="{StaticResource ColorTextoClaro}"/>
+                    </StackPanel>
+                    <Border Grid.Column="1" Background="{StaticResource ColorSuperficieOscuraAlt}" CornerRadius="8" Padding="16,8" Margin="0,0,12,0">
+                        <StackPanel>
+                            <TextBlock Text="ELEMENTOS" FontSize="10" FontWeight="Bold" Foreground="{StaticResource ColorTextoAtenuado}" HorizontalAlignment="Center"/>
+                            <TextBlock x:Name="TxtContadorElementos" Text="0"
+                                       FontFamily="Segoe UI" FontSize="20" FontWeight="Bold"
+                                       Foreground="{StaticResource ColorTextoClaro}" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+                    <Border Grid.Column="2" Background="{StaticResource ColorSuperficieOscuraAlt}" CornerRadius="8" Padding="16,8">
+                        <StackPanel>
+                            <TextBlock Text="ALGORITMO" FontSize="10" FontWeight="Bold" Foreground="{StaticResource ColorTextoAtenuado}" HorizontalAlignment="Center"/>
+                            <TextBlock x:Name="TxtUltimoAlgoritmo" Text="-" FontFamily="Segoe UI" FontSize="14" FontWeight="Bold"
+                                       Foreground="{StaticResource ColorAcento}" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </Border>
+
+            <Border Grid.Row="1" Background="{StaticResource ColorSuperficieOscura}" Margin="16,16,16,8"
+                    CornerRadius="12" BorderBrush="{StaticResource ColorBordeOscuro}" BorderThickness="1">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Border Grid.Row="0" Background="{StaticResource ColorSuperficieOscuraAlt}" CornerRadius="12,12,0,0"
+                            Padding="20,12" BorderBrush="{StaticResource ColorBordeOscuro}" BorderThickness="0,0,0,1">
+                        <Grid>
+                            <TextBlock Text="Arreglo de Entrada" FontFamily="Segoe UI" FontSize="14" FontWeight="Bold"
+                                       Foreground="{StaticResource ColorTextoClaro}" VerticalAlignment="Center"/>
+                            <TextBlock Text="Entrada" FontFamily="Segoe UI" FontSize="11" Foreground="{StaticResource ColorTextoAtenuado}"
+                                       HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                        </Grid>
+                    </Border>
+                    <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" Padding="12,10">
+                        <ItemsControl x:Name="ItmsArregloOriginal">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <VirtualizingStackPanel Orientation="Horizontal"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Background="{StaticResource ColorFondoOscuroSuave}" CornerRadius="6"
+                                            BorderBrush="{StaticResource ColorBordeOscuro}" BorderThickness="1" Padding="12,8" Margin="3,0">
+                                        <TextBlock Text="{Binding}" FontFamily="Cascadia Code, Consolas" FontSize="15" FontWeight="Bold"
+                                                   Foreground="{StaticResource ColorTextoClaro}"/>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </Grid>
+            </Border>
+
+            <Border Grid.Row="2" Background="{StaticResource ColorSuperficieOscura}" Margin="16,0,16,8"
+                    CornerRadius="12" BorderBrush="{StaticResource ColorBordeOscuro}" BorderThickness="1">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Border Grid.Row="0" Background="{StaticResource ColorSuperficieOscuraAlt}" CornerRadius="12,12,0,0"
+                            Padding="20,12" BorderBrush="{StaticResource ColorBordeOscuro}" BorderThickness="0,0,0,1">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="Resultado Ordenado" FontFamily="Segoe UI" FontSize="14" FontWeight="Bold"
+                                       Foreground="{StaticResource ColorTextoClaro}" VerticalAlignment="Center"/>
+                            <Border Grid.Column="1" x:Name="BadgeAlgoritmo" Background="{StaticResource ColorTeal}" CornerRadius="6" Padding="10,4">
+                                <TextBlock x:Name="TxtBadgeAlgo" Text="Sin ordenar" FontSize="11" FontWeight="Bold" Foreground="{StaticResource ColorBlanco}"/>
+                            </Border>
+                        </Grid>
+                    </Border>
+                    <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Padding="12,10">
+                        <ItemsControl x:Name="ItmsArregloOrdenado">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel Orientation="Horizontal"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Background="{StaticResource ColorFondoOscuroSuave}" CornerRadius="6"
+                                            BorderBrush="{StaticResource ColorBordeOscuro}" BorderThickness="1" Padding="12,8" Margin="3,3">
+                                        <TextBlock Text="{Binding}" FontFamily="Cascadia Code, Consolas" FontSize="15" FontWeight="Bold"
+                                                   Foreground="{StaticResource ColorTextoClaro}"/>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </Grid>
+            </Border>
+
+            <Border Grid.Row="3" Background="{StaticResource ColorFondoOscuroSuave}"
+                    BorderBrush="{StaticResource ColorBordeOscuro}" BorderThickness="0,1,0,0" Padding="20,10">
+                <Grid>
+                    <TextBlock x:Name="TxtAlerta" Text="Agrega datos y ejecuta un algoritmo."
+                               FontFamily="Segoe UI" FontSize="13" Foreground="{StaticResource ColorTextoAtenuado}"/>
+
+                    <TextBox x:Name="TxtListaOrdenamiento" Visibility="Collapsed"/>
+                </Grid>
+            </Border>
+        </Grid>
+    </Grid>
+</Window>
